@@ -50,10 +50,9 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Student $student)
     {
-        $student = Student::findOrFail($id);
-        return view('admin.students.show', compact('student'));
+        return view('admin.student.show', compact('student'));
     }
 
     /**
