@@ -24,6 +24,9 @@
                 <a href="{{ route('admin.dashboard') }}" class="block px-6 py-3 text-gray-700 hover:bg-gray-100 {{ request()->routeIs('admin.dashboard') ? 'bg-gray-100 border-r-4 border-blue-500' : '' }}">
                     Dashboard
                 </a>
+                <a href="{{ route('admin.students.index') }}" class="block px-6 py-3 text-gray-700 hover:bg-gray-100 {{ request()->routeIs('admin.students.*') ? 'bg-gray-100 border-r-4 border-blue-500' : '' }}">
+                    Students
+                </a>
                 <!-- Add more navigation items here -->
             </nav>
         </div>
