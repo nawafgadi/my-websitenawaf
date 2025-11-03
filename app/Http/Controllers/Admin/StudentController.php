@@ -11,6 +11,7 @@ class StudentController extends Controller
     /**
      * Display a listing of the resource.
      */
+    
     public function index()
 {
     $students = Student::all();
@@ -58,29 +59,31 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Student $student)
     {
-        $student = Student::findOrFail($id);
-        return view('admin.students.edit', compact('student'));
+        return view('admin.student.edit', compact('student'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Student $student)
     {
-        $student = Student::findOrFail($id);
-
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:students,email,' . $student->id,
-            'phone' => 'nullable|string|max:20',
-            'address' => 'nullable|string',
+        // Validasi input
+        $validated = $request->validate([
+            'nis'            => 'required',
+            'nama_lengkap'   => 'required',
+            'jenis_kelamin'  => 'required',
+            'nisn'           => 'required',
         ]);
 
-        $student->update($request->all());
+        // Update data siswa
+        $student->update($validated);
 
-        return redirect()->route('admin.students.index')->with('success', 'Student updated successfully.');
+        // Redirect dengan pesan sukses
+        return redirect()
+            ->route('admin.students.index')
+            ->with('success', 'Data siswa berhasil diperbarui');
     }
 
     /**
