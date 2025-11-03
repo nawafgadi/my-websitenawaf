@@ -17,6 +17,9 @@ class StudentController extends Controller
     return view('admin.students.index', compact('students'));
 }
 
+
+
+
     /**
      * Show the form for creating a new resource.
      */
@@ -25,21 +28,22 @@ class StudentController extends Controller
         return view('admin.students.create');
     }
 
+    
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:students,email',
-            'phone' => 'nullable|string|max:20',
-            'address' => 'nullable|string',
+            'nis' => 'required|unique:students',
+            'nama_lengkap' => 'required',
+            'jenis_kelamin' => 'required',
+            'nisn' => 'required|unique:students',
         ]);
 
         Student::create($request->all());
-
-        return redirect()->route('admin.students.index')->with('success', 'Student created successfully.');
+        return redirect()->route('admin.students.index')->with('success', 'Data berhasil disimpan!');
     }
 
     /**

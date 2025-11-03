@@ -1,4 +1,1 @@
-- [x] Update routes/web.php to route '/' to LandingController@index
-- [x] Update app/Http/Controllers/LandingController.php to add index method returning view('landing')
-- [x] Create basic content for resources/views/landing.blade.php
-- [x] Run php artisan serve to test the changes
+- [x] Update the create() function in StudentController to return view('admin.student.create')
