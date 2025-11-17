@@ -14,5 +14,20 @@ class Student extends Model
         'nama_lengkap',
         'jenis_kelamin',
         'nisn',
+        'email_orangtua',
+        'telepon_orangtua',
+        'asal_sekolah',
+        'pilihan_jenjang',
+        'class_id',
     ];
+
+    public function ptsScores()
+    {
+        return $this->hasMany(PtsScore::class);
+    }
+
+    public function schoolClass()
+    {
+        return $this->belongsTo(SchoolClass::class, 'class_id');
+    }
 }

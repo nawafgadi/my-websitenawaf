@@ -1,1 +1,6 @@
-- [x] Update the create() function in StudentController to return view('admin.student.create')
+- Fix SchoolClassController parameter names to match route model binding (change $schoolClass to $class in show, edit, update, destroy methods) - DONE
+- Update views to use $class instead of $schoolClass - DONE
+- Add class selection dropdown to student create form - DONE
+- Add class selection dropdown to student edit form - DONE
+- Update StudentController create() and edit() to pass classes to views - DONE
+- Update StudentController store() and update() to validate and save class_id - DONE

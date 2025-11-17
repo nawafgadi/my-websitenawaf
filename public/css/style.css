@@ -1,0 +1,376 @@
+/* ================== GLOBAL STYLES & VARIABLES ================== */
+:root {
+    --primary-color: #003366; /* Biru Tua Profesional */
+    --secondary-color: #f4f7fc; /* Latar Belakang Abu-abu Sangat Muda */
+    --accent-color: #FFD700;   /* Emas/Kuning untuk Tombol/Aksen */
+    --text-dark: #333;
+    --text-light: #f9f9f9;
+    --font-family: 'Poppins', sans-serif;
+    --container-width: 1200px;
+    --header-height: 70px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-family);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+section {
+    padding: 60px 0;
+}
+
+section:nth-child(even) {
+    background-color: var(--secondary-color);
+}
+
+h1, h2, h3 {
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+h1 { font-size: 2.8rem; }
+h2 { font-size: 2.2rem; text-align: center; }
+h3 { font-size: 1.5rem; }
+
+/* ================== UTILITIES (Tombol, dll) ================== */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    border: 2px solid var(--accent-color);
+}
+
+.btn-primary:hover {
+    background-color: transparent;
+    color: var(--accent-color);
+}
+
+.btn-lg {
+    font-size: 1.1rem;
+    padding: 15px 30px;
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+/* ================== HEADER & NAVIGASI ================== */
+header {
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: var(--header-height);
+}
+
+header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 600;
+    padding: 5px 10px;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: var(--primary-color);
+    transition: width 0.3s;
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 100%;
+}
+
+.menu-toggle {
+    display: none;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--primary-color);
+}
+
+/* ================== HERO SECTION ================== */
+#hero {
+    background: linear-gradient(rgba(0, 51, 102, 0.8), rgba(0, 51, 102, 0.7)), url('https://source.unsplash.com/1600x900/?school,library') no-repeat center center/cover;
+    min-height: calc(100vh - var(--header-height));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--text-light);
+}
+
+.hero-content h1 {
+    color: #fff;
+    font-size: 3.5rem;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ================== TENTANG KAMI ================== */
+#about .about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+}
+
+#about .about-image {
+    width: 100%;
+    height: 350px;
+    background: url('https://source.unsplash.com/800x600/?students,classroom') no-repeat center center/cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+#about .about-text ul {
+    list-style: none;
+    margin-top: 20px;
+}
+
+#about .about-text li {
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+#about .about-text i {
+    color: var(--primary-color);
+    margin-right: 10px;
+}
+
+/* ================== PROGRAM UNGGULAN ================== */
+.program-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card i {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+/* ================== FORMULIR PPDB ================== */
+#ppdb {
+    background-color: var(--secondary-color);
+}
+
+#ppdb h2, #ppdb p {
+    text-align: center;
+}
+
+#ppdb p {
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+}
+
+#ppdb-form {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-family: var(--font-family);
+    font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(0, 51, 102, 0.3);
+}
+
+/* ================== FOOTER ================== */
+footer {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    padding-top: 50px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+    padding-bottom: 40px;
+}
+
+.footer-info h3 {
+    color: var(--accent-color);
+}
+
+.footer-social {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.footer-social a {
+    color: var(--text-light);
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.footer-social a:hover {
+    color: var(--accent-color);
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    padding: 20px 0;
+    font-size: 0.9rem;
+}
+
+/* ================== RESPONSIVE DESIGN ================== */
+@media (max-width: 768px) {
+    h1 { font-size: 2.2rem; }
+    .hero-content h1 { font-size: 2.5rem; }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: var(--header-height);
+        left: 0;
+        width: 100%;
+        background: #fff;
+        padding: 20px 0;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links li {
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    .nav-links .btn {
+        margin-top: 10px;
+    }
+
+    #about .about-content {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .footer-social {
+        justify-content: center;
+    }
+}

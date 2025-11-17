@@ -17,10 +17,10 @@ class StudentFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'phone' => fake()->phoneNumber(),
-            'address' => fake()->address(),
+            'nis' => fake()->unique()->numberBetween(100000, 999999),
+            'nama_lengkap' => fake()->name(),
+            'jenis_kelamin' => fake()->randomElement(['L', 'P']),
+            'nisn' => fake()->unique()->numberBetween(1000000000, 9999999999),
         ];
     }
 }

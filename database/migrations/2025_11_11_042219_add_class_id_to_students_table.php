@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('students', function (Blueprint $table) {
-            $table->id();
-            $table->string('nis')->unique();
-            $table->string('nama_lengkap');
-            $table->enum('jenis_kelamin', ['L', 'P']);
-            $table->string('nisn')->unique();
-            $table->timestamps();
+        Schema::table('students', function (Blueprint $table) {
+            $table->foreignId('class_id')->nullable()->constrained('classes')->onDelete('set null');
         });
     }
 
@@ -26,6 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('students');
+        Schema::table('students', function (Blueprint $table) {
+            $table->dropForeign(['class_id']);
+            $table->dropColumn('class_id');
+        });
     }
 };

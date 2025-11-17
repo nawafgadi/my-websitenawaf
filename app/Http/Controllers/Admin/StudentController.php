@@ -26,7 +26,8 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return view('admin.students.create');
+        $classes = \App\Models\SchoolClass::all();
+        return view('admin.student.create', compact('classes'));
     }
 
     
@@ -41,6 +42,7 @@ class StudentController extends Controller
             'nama_lengkap' => 'required',
             'jenis_kelamin' => 'required',
             'nisn' => 'required|unique:students',
+            'class_id' => 'nullable|exists:classes,id',
         ]);
 
         Student::create($request->all());
@@ -60,7 +62,8 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        return view('admin.student.edit', compact('student'));
+        $classes = \App\Models\SchoolClass::all();
+        return view('admin.student.edit', compact('student', 'classes'));
     }
 
     /**
@@ -74,6 +77,7 @@ class StudentController extends Controller
             'nama_lengkap'   => 'required',
             'jenis_kelamin'  => 'required',
             'nisn'           => 'required',
+            'class_id'       => 'nullable|exists:classes,id',
         ]);
 
         // Update data siswa
@@ -94,5 +98,14 @@ class StudentController extends Controller
         $student->delete();
 
         return redirect()->route('admin.students.index')->with('success', 'Student deleted successfully.');
+    }
+
+    /**
+     * Display a listing of classes with student counts.
+     */
+    public function kelas()
+    {
+        $classes = \App\Models\SchoolClass::withCount('students')->get();
+        return view('admin.students.kelas', compact('classes'));
     }
 }

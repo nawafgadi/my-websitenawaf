@@ -7,14 +7,14 @@
         <div class="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4">
             <div class="flex justify-between items-center">
                 <div>
-                    <h1 class="text-2xl font-bold text-white">Students Management</h1>
-                    <p class="text-blue-100 mt-1">Manage your student records</p>
+                    <h1 class="text-2xl font-bold text-white">Classes Management</h1>
+                    <p class="text-blue-100 mt-1">Manage your class records</p>
                 </div>
-                <a href="{{ route('admin.students.create') }}" class="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-50 transition duration-200 flex items-center">
+                <a href="{{ route('admin.classes.create') }}" class="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-50 transition duration-200 flex items-center">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                     </svg>
-                    Add New Student
+                    Add New Class
                 </a>
             </div>
         </div>
@@ -25,12 +25,12 @@
                 <div class="flex items-center">
                     <div class="p-2 bg-blue-100 rounded-lg">
                         <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-600">Total Students</p>
-                        <p class="text-2xl font-bold text-gray-900">{{ $students->count() }}</p>
+                        <p class="text-sm font-medium text-gray-600">Total Classes</p>
+                        <p class="text-2xl font-bold text-gray-900">{{ $classes->count() }}</p>
                     </div>
                 </div>
             </div>
@@ -42,8 +42,8 @@
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-600">Active</p>
-                        <p class="text-2xl font-bold text-gray-900">{{ $students->count() }}</p>
+                        <p class="text-sm font-medium text-gray-600">Active Classes</p>
+                        <p class="text-2xl font-bold text-gray-900">{{ $classes->count() }}</p>
                     </div>
                 </div>
             </div>
@@ -55,8 +55,8 @@
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-600">Recent</p>
-                        <p class="text-2xl font-bold text-gray-900">{{ $students->where('created_at', '>=', now()->subDays(7))->count() }}</p>
+                        <p class="text-sm font-medium text-gray-600">Total Students</p>
+                        <p class="text-2xl font-bold text-gray-900">{{ $classes->sum('students_count') }}</p>
                     </div>
                 </div>
             </div>
@@ -68,8 +68,8 @@
                         </svg>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-600">Growth</p>
-                        <p class="text-2xl font-bold text-gray-900">+12%</p>
+                        <p class="text-sm font-medium text-gray-600">Avg Capacity</p>
+                        <p class="text-2xl font-bold text-gray-900">{{ $classes->avg('kapasitas') ? round($classes->avg('kapasitas')) : 0 }}</p>
                     </div>
                 </div>
             </div>
@@ -82,50 +82,46 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Lengkap</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email Orang Tua</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Telepon Orang Tua</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Asal Sekolah</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pilihan Jenjang</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Kelas</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Periode Kelas</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah Siswa</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        @forelse($students as $student)
+                        @forelse($classes as $class)
                         <tr class="hover:bg-gray-50 transition duration-150">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#{{ $student->id }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#{{ $class->id }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0 h-10 w-10">
                                         <div class="h-10 w-10 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center">
-                                            <span class="text-sm font-medium text-white">{{ substr($student->nama_lengkap, 0, 1) }}</span>
+                                            <span class="text-sm font-medium text-white">{{ substr($class->nama_kelas, 0, 1) }}</span>
                                         </div>
                                     </div>
                                     <div class="ml-4">
-                                        <div class="text-sm font-medium text-gray-900">{{ $student->nama_lengkap }}</div>
+                                        <div class="text-sm font-medium text-gray-900">{{ $class->nama_kelas }}</div>
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $student->email_orangtua ?: 'N/A' }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $student->telepon_orangtua ?: 'N/A' }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-500 max-w-xs truncate">{{ $student->asal_sekolah ?: 'N/A' }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $student->pilihan_jenjang ?: 'N/A' }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $class->tingkat ?: 'N/A' }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $class->students_count }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                 <div class="flex space-x-2">
-                                    <a href="{{ route('admin.students.show', $student->id) }}"
+                                    <a href="{{ route('admin.classes.show', $class->id) }}"
                                        class="btn btn-info btn-sm">
                                        Lihat
                                     </a>
 
-                                    <a href="{{ route('admin.students.edit', $student->id) }}"
+                                    <a href="{{ route('admin.classes.edit', $class->id) }}"
                                        class="btn btn-warning btn-sm">
                                        Edit
                                     </a>
 
-                                    <form action="{{ route('admin.students.destroy', $student->id) }}"
+                                    <form action="{{ route('admin.classes.destroy', $class->id) }}"
                                           method="POST"
                                           class="d-inline"
-                                          onsubmit="return confirm('Apakah kamu yakin ingin menghapus data siswa ini?')">
+                                          onsubmit="return confirm('Apakah kamu yakin ingin menghapus data kelas ini?')">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-danger btn-sm">Hapus</button>
@@ -135,15 +131,15 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="7" class="px-6 py-12 text-center">
+                            <td colspan="5" class="px-6 py-12 text-center">
                                 <div class="flex flex-col items-center">
                                     <svg class="w-12 h-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                                     </svg>
-                                    <h3 class="text-lg font-medium text-gray-900 mb-1">No students found</h3>
-                                    <p class="text-gray-500">Get started by adding your first student.</p>
-                                    <a href="{{ route('admin.students.create') }}" class="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition duration-150">
-                                        Add Student
+                                    <h3 class="text-lg font-medium text-gray-900 mb-1">No classes found</h3>
+                                    <p class="text-gray-500">Get started by adding your first class.</p>
+                                    <a href="{{ route('admin.classes.create') }}" class="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition duration-150">
+                                        Add Class
                                     </a>
                                 </td>
                             </tr>
